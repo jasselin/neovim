@@ -14,6 +14,8 @@
     Plug 'nvim-lua/plenary.nvim'
     Plug 'nvim-telescope/telescope.nvim'
 
+    Plug 'vimwiki/vimwiki'
+
     call plug#end()
 
 " Appearance
@@ -21,7 +23,7 @@
         set termguicolors
     endif
 
-    syntax enable
+    syntax on
     color dracula
     let g:airline_theme='dracula'
 
@@ -30,6 +32,7 @@
     set nowritebackup
     set noswapfile
 
+    set nocompatible
     filetype plugin indent on
     set tabstop=4 softtabstop=4 shiftwidth=4 shiftround expandtab
     set incsearch ignorecase smartcase hlsearch
@@ -44,7 +47,7 @@
     set updatetime=300 " Faster refresh
 
 " Key mappings
-    let mapleader = "\<Space>"
+    let mapleader = ","
 
     nmap <silent> <leader><leader> :noh<CR>
     nmap <C-Tab> :tabnext<CR>
@@ -105,6 +108,9 @@
 " vimrc shortcut and autoreload
     map <leader>vimrc :tabe $MYVIMRC<CR>
     autocmd bufwritepost init.vim source $MYVIMRC
+
+" vimwiki
+let g:vimwiki_list = [{'path': '~/vimwiki/', 'syntax': 'markdown', 'ext': '.md'}]
 
 " Commands
     " Remaps common typos
