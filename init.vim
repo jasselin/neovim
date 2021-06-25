@@ -1,20 +1,25 @@
 " Plugins
     call plug#begin()
 
+    " Themes
     Plug 'dracula/vim', { 'as': 'dracula' }
 
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
     Plug 'preservim/nerdtree'
     Plug 'preservim/nerdcommenter'
+    Plug 'preservim/tagbar'
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+    " Telescope
     Plug 'neovim/nvim-lspconfig'
     Plug 'nvim-lua/popup.nvim'
     Plug 'nvim-lua/plenary.nvim'
     Plug 'nvim-telescope/telescope.nvim'
 
+    " Vimwiki
     Plug 'vimwiki/vimwiki'
+    Plug 'tools-life/taskwiki'
 
     call plug#end()
 
@@ -45,6 +50,7 @@
     set cursorline
     set title  " File in title bar
     set updatetime=300 " Faster refresh
+    set clipboard=unnamed
 
 " Key mappings
     let mapleader = ","
@@ -98,19 +104,23 @@
     inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
                                 \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
-
 " Telescope
     nnoremap <leader>ff <cmd>Telescope find_files<cr>
     nnoremap <leader>fg <cmd>Telescope live_grep<cr>
     nnoremap <leader>fb <cmd>Telescope buffers<cr>
     nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
+" Tagbar
+    nmap <leader>b :TagbarToggle<CR>
+    let g:tagbar_width = 30
+
 " vimrc shortcut and autoreload
     map <leader>vimrc :tabe $MYVIMRC<CR>
     autocmd bufwritepost init.vim source $MYVIMRC
 
 " vimwiki
-let g:vimwiki_list = [{'path': '~/vimwiki/', 'syntax': 'markdown', 'ext': '.md'}]
+    let g:vimwiki_list = [{'path': '~/vimwiki/', 'syntax': 'markdown', 'ext': '.md'}]
+    let g:vimwiki_global_ext = 0
 
 " Commands
     " Remaps common typos
