@@ -110,6 +110,8 @@
     nnoremap <leader>fb <cmd>Telescope buffers<cr>
     nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
+    :lua require('telescope').setup{ defaults = { file_ignore_patterns = {"node_modules"} } }
+
 " Tagbar
     nmap <leader>b :TagbarToggle<CR>
     let g:tagbar_width = 30
