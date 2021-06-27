@@ -21,6 +21,11 @@
     Plug 'vimwiki/vimwiki'
     Plug 'tools-life/taskwiki'
 
+    " Language support
+    Plug 'pangloss/vim-javascript'
+    Plug 'plasticboy/vim-markdown'
+    Plug 'leafgarland/typescript-vim'
+
     call plug#end()
 
 " Appearance
@@ -120,9 +125,19 @@
     map <leader>vimrc :tabe $MYVIMRC<CR>
     autocmd bufwritepost init.vim source $MYVIMRC
 
+" vim-markdown
+    let g:markdown_fenced_languages = ['javascript', 'bash', 'css']
+
 " vimwiki
     let g:vimwiki_list = [{'path': '~/vimwiki/', 'syntax': 'markdown', 'ext': '.md'}]
     let g:vimwiki_global_ext = 0
+    let g:vimwiki_diary_header = 'Journal'
+    let g:vimwiki_diary_months = {
+        \ 1: 'Janvier', 2: 'Février', 3: 'Mars',
+        \ 4: 'Avril', 5: 'Mai', 6: 'Juin',
+        \ 7: 'Juillet', 8: 'Août', 9: 'Septembre',
+        \ 10: 'Octobre', 11: 'Novembre', 12: 'Décembre'
+        \ }
 
 " Commands
     " Remaps common typos
