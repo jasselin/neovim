@@ -3,13 +3,14 @@
 
     " Themes
     Plug 'dracula/vim', { 'as': 'dracula' }
+    Plug 'rmehri01/onenord.nvim', { 'branch': 'main' }
+    "Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 
-    Plug 'vim-airline/vim-airline'
-    Plug 'vim-airline/vim-airline-themes'
+    Plug 'nvim-lualine/lualine.nvim'
+    Plug 'kyazdani42/nvim-web-devicons'
+
     Plug 'preservim/nerdtree'
     Plug 'preservim/nerdcommenter'
-    Plug 'preservim/tagbar'
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
     " Telescope
     Plug 'neovim/nvim-lspconfig'
@@ -17,14 +18,20 @@
     Plug 'nvim-lua/plenary.nvim'
     Plug 'nvim-telescope/telescope.nvim'
 
-    " Vimwiki
-    Plug 'vimwiki/vimwiki'
-    Plug 'tools-life/taskwiki'
+    " nvim-cmp
+    Plug 'hrsh7th/nvim-cmp'
+
+    " orgmode
+    Plug 'nvim-treesitter/nvim-treesitter'
+    Plug 'nvim-orgmode/orgmode'
+
+    " deardiary
+    Plug 'ishchow/nvim-deardiary'
 
     " Language support
     Plug 'pangloss/vim-javascript'
-    Plug 'plasticboy/vim-markdown'
     Plug 'leafgarland/typescript-vim'
+    Plug 'plasticboy/vim-markdown'
 
     call plug#end()
 
@@ -34,8 +41,6 @@
     endif
 
     syntax on
-    color dracula
-    let g:airline_theme='dracula'
 
 " Other configs
     set nobackup
@@ -72,43 +77,6 @@
     nmap <C-k> <Plug>NERDCommenterToggle
     vmap <C-k> <Plug>NERDCommenterToggle<CR>gv
 
-" CoC
-    set cmdheight=2
-    set shortmess+=c
-
-    if has("nvim-0.5.0") || has("patch-8.1.1564")
-        " Recently vim can merge signcolumn and number column into one
-        set signcolumn=number
-    else
-        set signcolumn=yes
-    endif
-
-    " Use tab for trigger completion with characters ahead and navigate.
-    " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-    " other plugin before putting this into your config.
-    inoremap <silent><expr> <TAB>
-        \ pumvisible() ? "\<C-n>" :
-        \ <SID>check_back_space() ? "\<TAB>" :
-        \ coc#refresh()
-    inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-    function! s:check_back_space() abort
-        let col = col('.') - 1
-        return !col || getline('.')[col - 1]  =~# '\s'
-    endfunction
-
-    " Use <c-space> to trigger completion.
-    if has('nvim')
-        inoremap <silent><expr> <c-space> coc#refresh()
-    else
-        inoremap <silent><expr> <c-@> coc#refresh()
-    endif
-
-    " Make <CR> auto-select the first completion item and notify coc.nvim to
-    " format on enter, <cr> could be remapped by other vim plugin
-    inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                                \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-
 " Telescope
     nnoremap <leader>ff <cmd>Telescope find_files<cr>
     nnoremap <leader>fg <cmd>Telescope live_grep<cr>
@@ -117,10 +85,6 @@
 
     :lua require('telescope').setup{ defaults = { file_ignore_patterns = {"node_modules"} } }
 
-" Tagbar
-    nmap <leader>b :TagbarToggle<CR>
-    let g:tagbar_width = 30
-
 " vimrc shortcut and autoreload
     map <leader>vimrc :tabe $MYVIMRC<CR>
     autocmd bufwritepost init.vim source $MYVIMRC
@@ -128,16 +92,74 @@
 " vim-markdown
     let g:markdown_fenced_languages = ['javascript', 'bash', 'css']
 
-" vimwiki
-    let g:vimwiki_list = [{'path': '~/vimwiki/', 'syntax': 'markdown', 'ext': '.md'}]
-    let g:vimwiki_global_ext = 0
-    let g:vimwiki_diary_header = 'Journal'
-    let g:vimwiki_diary_months = {
-        \ 1: 'Janvier', 2: 'Février', 3: 'Mars',
-        \ 4: 'Avril', 5: 'Mai', 6: 'Juin',
-        \ 7: 'Juillet', 8: 'Août', 9: 'Septembre',
-        \ 10: 'Octobre', 11: 'Novembre', 12: 'Décembre'
-        \ }
+lua << EOF
+require('onenord').setup()
+require('lualine').setup {
+  options = {
+    theme = 'onenord'
+  }
+}
+EOF
+
+" orgmode
+lua << EOF
+
+ -- Load custom tree-sitter grammar for org filetype
+ require('orgmode').setup_ts_grammar()
+ 
+ -- Tree-sitter configuration
+ require'nvim-treesitter.configs'.setup {
+   -- If TS highlights are not enabled at all, or disabled via `disable` prop, highlighting will fallback to default Vim syntax highlighting
+   highlight = {
+     enable = true,
+     disable = {'org'}, -- Remove this to use TS highlighter for some of the highlights (Experimental)
+     additional_vim_regex_highlighting = {'org'}, -- Required since TS highlighter doesn't support all syntax features (conceal)
+   },
+   ensure_installed = {'org'}, -- Or run :TSUpdate org
+ }
+
+ require'cmp'.setup({
+  sources = {
+    { name = 'orgmode' }
+  }
+})
+
+ require('orgmode').setup({
+    org_agenda_files = {'~/Dropbox/org/**/*'},
+    org_default_notes_file = '~/Dropbox/org/inbox.org',
+    org_todo_keywords = {'TODO(t)', 'NEXT(n)', 'WAIT(w)', '|', 'DONE(d)', 'KILL(k)'},
+    org_todo_keyword_faces = {
+        WAIT = ':foreground orange',
+        KILL = ':foreground red',
+        NEXT = ':foreground cyan',
+        DONE = ':foreground grey'
+    },
+    org_hide_leading_stars = true
+ })
+EOF
+
+lua << EOF
+local diary_config = require('deardiary.config')
+local util = require("deardiary.util")
+diary_config.journals = {
+    {
+            path = "~/Dropbox/org/journal",
+            frequencies = {
+                daily = {
+                    template = function(entry_date)
+                    -- Changes template string
+                    return entry_date:fmt("# %Y-%m-%d")
+                    end,
+                    formatpath = function(entry_date)
+                    -- Puts all daily entries in one folder instead of
+                    -- separating per year and month which is the default
+                    return entry_date:fmt(util.join_path({"daily","%Y-%m-%d.org"}))
+                    end,
+                    },
+                }
+}
+}
+EOF
 
 " Commands
     " Remaps common typos
@@ -148,4 +170,4 @@
 
 " Fixes for French-Canadian keyboard layout
     nnoremap ? ^
-    nnoremap é ?
+    nnoremap é /
