@@ -28,6 +28,12 @@
     " deardiary
     Plug 'ishchow/nvim-deardiary'
 
+    " which-key
+    Plug 'folke/which-key.nvim'
+
+    " dashboard
+    "Plug 'glepnir/dashboard-nvim'
+
     " Language support
     Plug 'pangloss/vim-javascript'
     Plug 'leafgarland/typescript-vim'
@@ -63,7 +69,7 @@
     set clipboard=unnamed
 
 " Key mappings
-    let mapleader = ","
+    let mapleader = " "
 
     nmap <silent> <leader><leader> :noh<CR>
     nmap <C-Tab> :tabnext<CR>
@@ -91,6 +97,9 @@
 
 " vim-markdown
     let g:markdown_fenced_languages = ['javascript', 'bash', 'css']
+
+" dashboard
+" let g:dashboard_default_executive ='telescope'
 
 lua << EOF
 require('onenord').setup()
@@ -159,6 +168,14 @@ diary_config.journals = {
                 }
 }
 }
+EOF
+
+lua << EOF
+require("which-key").setup {
+    -- your configuration comes here
+    -- or leave it empty to use the default settings
+    -- refer to the configuration section below
+  }
 EOF
 
 " Commands
