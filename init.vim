@@ -81,8 +81,8 @@
     let mapleader = " "
 
     nmap <silent> <leader><leader> :noh<CR>
-    nmap <C-Tab> :tabnext<CR>
-    nmap <C-S-Tab> :tabprevious<CR>
+    "nmap <C-Tab> :tabnext<CR>
+    "nmap <C-S-Tab> :tabprevious<CR>
     nnoremap ; :
 
 " NERDTree
@@ -230,6 +230,11 @@ lua << EOF
  })
 EOF
 
+augroup orgmode
+    au!
+    autocmd Syntax org setlocal foldmethod=manual
+augroup END
+
 lua << EOF
 local diary_config = require('deardiary.config')
 local util = require("deardiary.util")
@@ -239,18 +244,18 @@ diary_config.journals = {
             frequencies = {
                 daily = {
                     template = function(entry_date)
-                    -- Changes template string
-                    return entry_date:fmt("# %Y-%m-%d")
+                    return entry_date:fmt("* %Y-%m-%d\n\n** Quotidienne\n*** Bonne nouvelle\n*** Priorité\n")
                     end,
                     formatpath = function(entry_date)
-                    -- Puts all daily entries in one folder instead of
-                    -- separating per year and month which is the default
                     return entry_date:fmt(util.join_path({"daily","%Y-%m-%d.org"}))
                     end,
                     },
                 }
+    }
 }
-}
+
+local diary = require('deardiary')
+diary.set_current_journal(1)
 EOF
 
 lua << EOF
