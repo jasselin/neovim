@@ -1,0 +1,28 @@
+* Neovim config
+
+- [ ] orgmode
+    - [X] Ouvrir avec le folding désactivé 
+    - [ ] Voir si on peut afficher les images
+- [ ] Daily
+    - [ ] Configurer les fichiers à utiliser
+    - [ ] Configurer un template
+- [ ] Language support
+    - [ ] Javascript
+    - [ ] TypeScript
+    - [ ] C#
+    - [ ] PowerShell
+    - [ ] Python
+    - [ ] Bash
+    - [ ] Markdown
+    - [ ] lua
+- [ ] Transfert de données depuis Obsidian
+- [ ] Définir des projets pour accès rapide à certains répertoires
+- [ ] Configurer which-key et les raccouris des plugins
+- [ ] Configurer les raccourcis
+- [ ] Configurer autocmd pour vimrc
+- [ ] Utiliser packer?
+- [ ] Configurer luasnip
+- [ ] Besoin d'un plugin de dashboard?
+- [ ] Configurer telescope
+- [ ] Séparer init.vim en fichier / convertir à lua
+- [ ] Configurer neogit
