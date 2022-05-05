@@ -35,4 +35,65 @@ packer.startup(function(use)
         end
     }
 
+    use {
+        'hrsh7th/nvim-cmp',
+        requires = {
+            { 'hrsh7th/cmp-nvim-lsp' },
+            { 'hrsh7th/cmp-buffer' },
+            { 'hrsh7th/cmp-path' },
+            { 'hrsh7th/cmp-cmdline' },
+        },
+        config = function()
+            require('user.plugins.cmp')
+        end
+    }
+
+    use {
+        'L3MON4D3/LuaSnip',
+        requires = 'saadparwaiz1/cmp_luasnip',
+        config = function()
+            require('user.plugins.luasnip')
+        end
+    }
+
+    use {
+        'numToStr/Comment.nvim',
+        config = function()
+            require('user.plugins.comment')
+        end
+    }
+
+    use {
+        'folke/which-key.nvim',
+        config = function()
+            require('user.plugins.whichkey')
+        end
+    }
+
+    use { 
+        'TimUntersberger/neogit', 
+        requires = 'nvim-lua/plenary.nvim',
+        config = function()
+            require('user.plugins.neogit')
+        end
+    }
+
+    use {
+        'nvim-orgmode/orgmode',
+        requires = {
+           { 'nvim-treesitter/nvim-treesitter' },
+           { 'hrsh7th/nvim-cmp' },
+        },
+        config = function()
+            require('user.plugins.orgmode')
+        end
+    }
+
+    use {
+        'ishchow/nvim-deardiary',
+        config = function()
+            require('user.plugins.deardiary')
+        end
+    }
+
 end)

@@ -14,6 +14,7 @@ packer.init {
   },
   auto_clean = true,
   compile_on_sync = true,
+  ensure_dependencies = true
 }
 
 packer.set_handler('config', function(_, plugin, value)

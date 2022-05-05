@@ -4,8 +4,8 @@
     - [X] Ouvrir avec le folding désactivé 
     - [ ] Voir si on peut afficher les images
 - [ ] Daily
-    - [ ] Configurer les fichiers à utiliser
-    - [ ] Configurer un template
+    - [X] Configurer les fichiers à utiliser
+    - [X] Configurer un template
 - [ ] Language support
     - [ ] Javascript
     - [ ] TypeScript
@@ -20,9 +20,9 @@
 - [ ] Configurer which-key et les raccouris des plugins
 - [ ] Configurer les raccourcis
 - [ ] Configurer autocmd pour vimrc
-- [ ] Utiliser packer?
+- [X] Utiliser packer?
 - [ ] Configurer luasnip
 - [ ] Besoin d'un plugin de dashboard?
 - [ ] Configurer telescope
-- [ ] Séparer init.vim en fichier / convertir à lua
+- [X] Séparer init.vim en fichier / convertir à lua
 - [ ] Configurer neogit
