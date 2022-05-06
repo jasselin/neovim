@@ -1,4 +1,5 @@
 local telescope = require 'telescope'
+local builtin = require 'telescope.builtin'
 local actions = require 'telescope.actions'
 local keymap = require 'lib.utils'.keymap
 
@@ -15,7 +16,22 @@ telescope.setup {
     } 
 }
 
-keymap('n', '<leader>ff', ':Telescope find_files<CR>')
-keymap('n', '<leader>fg', ':Telescope live_grep<CR>')
-keymap('n', '<leader>fb', ':Telescope buffers<CR>')
-keymap('n', '<leader>fh', ':Telescope help_tags<CR>')
+vim.api.nvim_create_user_command(
+    'NoteFindFile', 
+    function() 
+        builtin.find_files { 
+            cwd = "~/Dropbox/org" 
+        }
+    end,
+    {}
+)
+
+vim.api.nvim_create_user_command(
+    'NoteSearch', 
+    function() 
+        builtin.live_grep { 
+            cwd = "~/Dropbox/org" 
+        }
+    end,
+    {}
+)
