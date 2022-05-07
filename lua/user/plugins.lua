@@ -23,6 +23,14 @@ packer.startup(function(use)
     --         require('user.plugins.dashboard')
     --     end
     -- }
+    use {
+        'akinsho/bufferline.nvim', 
+        tag = "v2.*", 
+        requires = 'kyazdani42/nvim-web-devicons',
+        config = function()
+            require('user.plugins.bufferline')
+        end
+    }
 
     use {
         'nvim-lualine/lualine.nvim',
