@@ -16,13 +16,13 @@
     - [ ] Markdown
     - [ ] lua
 - [ ] Transfert de données depuis Obsidian
-- [ ] Définir des projets pour accès rapide à certains répertoires
+- [X] Définir des projets pour accès rapide à certains répertoires
 - [ ] Configurer which-key et les raccouris des plugins
 - [ ] Configurer les raccourcis
 - [ ] Configurer autocmd pour vimrc
 - [X] Utiliser packer?
 - [ ] Configurer luasnip
 - [ ] Besoin d'un plugin de dashboard?
-- [ ] Configurer telescope
+- [X] Configurer telescope
 - [X] Séparer init.vim en fichier / convertir à lua
-- [ ] Configurer neogit
+- [X] Configurer neogit
