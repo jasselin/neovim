@@ -22,6 +22,8 @@ keymap('n', '<C-l>', '<C-w><C-l>')
 -- buffers
 keymap('n', '<leader>bh', ':hide<CR>')
 keymap('n', '<leader>bk', ':bd<CR>')
+keymap('n', '<leader>bp', ':bprevious<CR>')
+keymap('n', '<leader>bn', ':bnext<CR>')
 
 -- windows
 keymap('n', '<leader>wv', ':vsplit<CR>')
