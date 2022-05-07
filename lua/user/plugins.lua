@@ -6,8 +6,10 @@ packer.startup(function(use)
     use { 'wbthomason/packer.nvim' }
 
     use {
-        'dracula/vim',
-        as = 'dracula',
+        'morhetz/gruvbox', 
+        as = 'gruvbox',
+        -- 'dracula/vim',
+        -- as = 'dracula',
         --'rmehri01/onenord.nvim',
         --branch = 'main',
         config = function()
