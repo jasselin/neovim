@@ -16,6 +16,7 @@ vim.o.syntax = true                       -- syntax highlighthing
 vim.o.wrap = false                        -- no line wrapping
 vim.o.cursorline = true                   -- highlight current line
 vim.o.completeopt = menu,menuone,noselect -- completion order
+vim.o.signcolumn = 'yes:2'                -- left margin for lsp signs
 
 -- search
 vim.o.ignorecase = true                   -- ignore case when searching

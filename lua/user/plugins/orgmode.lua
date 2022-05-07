@@ -1,8 +1,3 @@
--- local telescope = require 'telescope'
--- local actions = require 'telescope.actions'
--- local keymap = require 'lib.utils'.keymap
-
-
 -- Load custom tree-sitter grammar for org filetype
 require('orgmode').setup_ts_grammar()
 
@@ -23,6 +18,14 @@ require('cmp').setup({
     }
 })
 
+local cmp = require('cmp')
+
+cmp.setup.filetype('org', {
+    sources = cmp.config.sources({
+        { name = 'orgmode' }
+    })
+})
+
 require('orgmode').setup({
     org_agenda_files = {'~/Dropbox/org/**/*'},
     org_default_notes_file = '~/Dropbox/org/inbox.org',
@@ -36,9 +39,9 @@ require('orgmode').setup({
     org_hide_leading_stars = true
 })
 
-vim.cmd [[
-    augroup orgmode
-        au!
-        autocmd Syntax org setlocal foldmethod=manual
-    augroup END
-]]
+-- vim.cmd [[
+--     augroup orgmode
+--         au!
+--         autocmd Syntax org setlocal foldmethod=manual
+--     augroup END
+-- ]]
