@@ -35,6 +35,13 @@ packer.startup(function(use)
         end
     }
 
+    use { 
+        'ahmedkhalf/project.nvim',
+        config = function()
+            require('user.plugins.project')
+        end
+    }
+
     use {
         'hrsh7th/nvim-cmp',
         requires = {

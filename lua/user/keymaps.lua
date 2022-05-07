@@ -33,6 +33,7 @@ keymap('n', '<leader>g', ':Neogit<CR>')
 -- files
 keymap('n', '<leader>ff', ':Telescope find_files<CR>') -- find file
 keymap('n', '<leader>fs', ':Telescope live_grep<CR>') -- file search
+keymap('n', '<leader>fp', ':Telescope projects<CR>') -- find project
 keymap('n', '<leader>bb', ':Telescope buffers<CR>') -- buffers
 keymap('n', '<leader>hf', ':Telescope help_tags<CR>') -- help find
 
