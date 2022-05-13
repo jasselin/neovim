@@ -26,5 +26,5 @@ vim.o.smartcase = true                    -- use case when typed in search
 vim.o.backup = false                      -- no backup when overwriting a file
 vim.o.writebackup = false                 -- no backup when writing to an existing file
 vim.o.swapfile = false                    -- no buffer swap file
-vim.o.clipboard = unnamedplus             -- use system clipboard
+vim.o.clipboard = unnamed                 -- use system clipboard
 
