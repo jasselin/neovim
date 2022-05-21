@@ -87,3 +87,6 @@ table.insert(runtime_path, "lua/?/init.lua")
 --         },
 --     },
 -- }
+--
+
+require('lspconfig').pyright.setup {}

@@ -6,14 +6,12 @@ packer.startup(function(use)
     use { 'wbthomason/packer.nvim' }
 
     use {
-        'morhetz/gruvbox', 
-        as = 'gruvbox',
-        -- 'dracula/vim',
-        -- as = 'dracula',
-        --'rmehri01/onenord.nvim',
-        --branch = 'main',
+        -- 'morhetz/gruvbox', as = 'gruvbox',
+        -- 'dracula/vim', as = 'dracula',
+        -- 'rmehri01/onenord.nvim', branch = 'main',
+        'EdenEast/nightfox.nvim', as = 'nightfox',
         config = function()
-            require('user.plugins.theme')
+            vim.cmd([[ colorscheme nightfox ]])
         end
     }
 
@@ -114,20 +112,20 @@ packer.startup(function(use)
     use {
         'nvim-orgmode/orgmode',
         requires = {
-           { 'nvim-treesitter/nvim-treesitter' },
-           { 'hrsh7th/nvim-cmp' },
+            { 'nvim-treesitter/nvim-treesitter' },
+            { 'hrsh7th/nvim-cmp' },
         },
         config = function()
             require('user.plugins.orgmode')
         end
     }
 
-    use {
-        'akinsho/org-bullets.nvim',
-        config = function()
-            require('user.plugins.org-bullets')
-        end
-    }
+    -- use {
+    --     'akinsho/org-bullets.nvim',
+    --     config = function()
+    --         require('user.plugins.org-bullets')
+    --     end
+    -- }
 
     use {
         'ishchow/nvim-deardiary',
