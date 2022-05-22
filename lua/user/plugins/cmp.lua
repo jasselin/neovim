@@ -1,5 +1,10 @@
 -- Setup nvim-cmp.
-local cmp = require'cmp'
+local cmp = require('cmp')
+local lspconfig = require('lspconfig')
+
+local sysname = vim.loop.os_uname().sysname
+local homedir = vim.loop.os_homedir()
+local pid = vim.fn.getpid()
 
 cmp.setup({
     snippet = {
@@ -58,35 +63,75 @@ cmp.setup.cmdline(':', {
 -- Setup lspconfig.
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
+-- npm install -g bash-language-server
+lspconfig.bashls.setup { capabilities = capabilities }
+--
+--npm install -g typescript typescript-language-server
+lspconfig.tsserver.setup { capabilities = capabilities }
+
+-- npm install -g pyright
+lspconfig.pyright.setup { capabilities = capabilities }
+
+-- OmniSharp
+-- https://github.com/OmniSharp/omnisharp-roslyn/releases
+--
+-- MacOS
+-- Il faut autoriser l'exécutable sous MacOS
+-- find ~/omnisharp | xargs xattr -r -d com.apple.quarantine
+-- DOTNET_ROOT doit être défini dans ~/.zprofile
+-- export DOTNET_ROOT=/usr/local/share/dotnet
+if sysname == "Darwin" then
+    local omnisharp_bin = homedir .. "/omnisharp/OmniSharp"
+    lspconfig.omnisharp.setup {
+        capabilities = capabilities,
+        cmd = { omnisharp_bin, "--languageserver" , "--hostPID", tostring(pid) }
+    }
+end
+
+-- PowerShell
+-- https://github.com/PowerShell/PowerShellEditorServices/releases
+if sysname == "Darwin" then
+    lspconfig.powershell_es.setup {
+        capabilities = capabilities,
+        bundle_path = homedir .. '/PowerShellEditorServices'
+    }
+end
+
+-- lua
 local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
--- require'lspconfig'.sumneko_lua.setup {
---     capabilities = capabilities,
---     settings = {
---         Lua = {
---             runtime = {
---                 -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
---                 version = 'LuaJIT',
---                 -- Setup your lua path
---                 path = runtime_path,
---             },
---             diagnostics = {
---                 -- Get the language server to recognize the `vim` global
---                 globals = {'vim'},
---             },
---             workspace = {
---                 -- Make the server aware of Neovim runtime files
---                 library = vim.api.nvim_get_runtime_file("", true),
---             },
---             -- Do not send telemetry data containing a randomized but unique identifier
---             telemetry = {
---                 enable = false,
---             },
---         },
---     },
--- }
---
+lspconfig.sumneko_lua.setup {
+    capabilities = capabilities,
+    settings = {
+        Lua = {
+            runtime = {
+                -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+                version = 'LuaJIT',
+                -- Setup your lua path
+                path = runtime_path,
+            },
+            diagnostics = {
+                -- Get the language server to recognize the `vim` global
+                globals = {'vim'},
+            },
+            workspace = {
+                -- Make the server aware of Neovim runtime files
+                library = vim.api.nvim_get_runtime_file("", true),
+            },
+            -- Do not send telemetry data containing a randomized but unique identifier
+            telemetry = {
+                enable = false,
+            },
+        },
+    },
+}
 
-require('lspconfig').pyright.setup {}
+-- go
+-- go install golang.org/x/tools/gopls@latest
+lspconfig.gopls.setup {}
+
+-- rust
+-- brew install rust-analyzer
+lspconfig.rust_analyzer.setup{}
