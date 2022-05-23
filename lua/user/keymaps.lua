@@ -5,7 +5,7 @@ local keymap = require 'lib.utils'.keymap
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-keymap('n', ';', ':')
+--keymap('n', ';', ':')
 keymap('n', '<leader>q', ':q<CR>')
 keymap('n', '<leader>3', ':noh<CR>')
 keymap('n', '<leader>hf', ':Telescope help_tags<CR>') -- help find
@@ -23,6 +23,7 @@ keymap('n', '<C-l>', '<C-w><C-l>')
 -- buffers
 keymap('n', '<leader>bh', ':hide<CR>')
 keymap('n', '<leader>bk', ':bd<CR>')
+keymap('n', '<leader>bK', ':bd!<CR>')
 keymap('n', '<leader>bp', ':bprevious<CR>')
 keymap('n', '<leader>bn', ':bnext<CR>')
 keymap('n', '<leader>bb', ':Telescope buffers<CR>') -- buffers

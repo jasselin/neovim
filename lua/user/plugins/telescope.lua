@@ -1,10 +1,9 @@
 local telescope = require 'telescope'
 local builtin = require 'telescope.builtin'
 local actions = require 'telescope.actions'
-local keymap = require 'lib.utils'.keymap
 
 telescope.setup {
-    defaults = { 
+    defaults = {
         file_ignore_patterns = {"node_modules", ".git/"},
         layout_config = {
             vertical = { width = 0.9, preview_height = 0.65 },
@@ -22,20 +21,20 @@ telescope.setup {
 }
 
 vim.api.nvim_create_user_command(
-    'NoteFindFile', 
-    function() 
-        builtin.find_files { 
-            cwd = "~/Dropbox/org" 
+    'NoteFindFile',
+    function()
+        builtin.find_files {
+            cwd = "~/Dropbox/org"
         }
     end,
     {}
 )
 
 vim.api.nvim_create_user_command(
-    'NoteSearch', 
-    function() 
-        builtin.live_grep { 
-            cwd = "~/Dropbox/org" 
+    'NoteSearch',
+    function()
+        builtin.live_grep {
+            cwd = "~/Dropbox/org"
         }
     end,
     {}

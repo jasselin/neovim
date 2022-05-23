@@ -101,11 +101,18 @@ packer.startup(function(use)
         end
     }
 
-    use { 
-        'TimUntersberger/neogit', 
+    use {
+        'TimUntersberger/neogit',
         requires = 'nvim-lua/plenary.nvim',
         config = function()
             require('user.plugins.neogit')
+        end
+    }
+
+    use {
+        'preservim/vim-markdown',
+        config = function()
+            require('user.plugins.vim-markdown')
         end
     }
 
