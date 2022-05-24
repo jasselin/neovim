@@ -117,6 +117,13 @@ packer.startup(function(use)
     }
 
     use {
+        '~/nvn', as = 'nvn',
+        config = function()
+            require('user.plugins.nvn')
+        end
+    }
+
+    use {
         'nvim-orgmode/orgmode',
         requires = {
             { 'nvim-treesitter/nvim-treesitter' },
