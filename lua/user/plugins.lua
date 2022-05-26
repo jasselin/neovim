@@ -118,6 +118,9 @@ packer.startup(function(use)
 
     use {
         '~/nvn', as = 'nvn',
+        requires = {
+            'nvim-lua/plenary.nvim'
+        },
         config = function()
             require('user.plugins.nvn')
         end

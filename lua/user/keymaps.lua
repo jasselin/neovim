@@ -15,10 +15,10 @@ keymap('n', '<leader>ve', ':e $MYVIMRC<CR>')
 keymap('n', '<leader>vr', ':source $MYVIMRC<CR>')
 
 -- navigation
-keymap('n', '<C-h>', '<C-w><C-h>')
-keymap('n', '<C-j>', '<C-w><C-j>')
-keymap('n', '<C-k>', '<C-w><C-k>')
-keymap('n', '<C-l>', '<C-w><C-l>')
+-- keymap('n', '<C-h>', '<C-w><C-h>')
+-- keymap('n', '<C-j>', '<C-w><C-j>')
+-- keymap('n', '<C-k>', '<C-w><C-k>')
+-- keymap('n', '<C-l>', '<C-w><C-l>')
 
 -- buffers
 keymap('n', '<leader>bh', ':hide<CR>')
