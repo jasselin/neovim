@@ -43,4 +43,5 @@ keymap('n', '<leader>fe', ':NvimTreeFindFileToggle<CR>') -- find project
 
 -- notes
 keymap('n', '<leader>nf', ':NoteFindFile<CR>') -- find note file
-keymap('n', '<leader>ns', ':NoteSearch<CR>') -- find note file
+keymap('n', '<leader>ns', ':NoteSearch<CR>') -- note search
+keymap('n', '<leader>nr', ':NvnScanNotes<CR>') -- refresh notes

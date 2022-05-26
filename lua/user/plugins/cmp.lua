@@ -7,11 +7,6 @@ local sysname = vim.loop.os_uname().sysname
 local homedir = vim.loop.os_homedir()
 local pid = vim.fn.getpid()
 
-local has_words_before = function()
-  local line, col = table.unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match '%s' == nil
-end
-
 cmp.setup({
     experimental = {
         ghost_text = true
@@ -68,18 +63,58 @@ cmp.setup.cmdline(':', {
         { name = 'cmdline' }
     })
 })
+--
+-- Mappings.
+-- See `:help vim.diagnostic.*` for documentation on any of the below functions
+local opts = { noremap = true, silent = true }
+vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
+
+-- Use an on_attach function to only map the following keys
+-- after the language server attaches to the current buffer
+local on_attach = function(client, bufnr)
+    -- Enable completion triggered by <c-x><c-o>
+    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+    -- Mappings.
+    -- See `:help vim.lsp.*` for documentation on any of the below functions
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+end
 
 -- Setup lspconfig.
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 -- npm install -g bash-language-server
-lspconfig.bashls.setup { capabilities = capabilities }
+lspconfig.bashls.setup {
+    capabilities = capabilities,
+    on_attach = on_attach
+}
 --
 --npm install -g typescript typescript-language-server
-lspconfig.tsserver.setup { capabilities = capabilities }
+lspconfig.tsserver.setup {
+    capabilities = capabilities,
+    on_attach = on_attach
+}
 
 -- npm install -g pyright
-lspconfig.pyright.setup { capabilities = capabilities }
+lspconfig.pyright.setup {
+    capabilities = capabilities,
+    on_attach = on_attach
+}
 
 -- OmniSharp
 -- https://github.com/OmniSharp/omnisharp-roslyn/releases
@@ -93,7 +128,8 @@ if sysname == "Darwin" then
     local omnisharp_bin = homedir .. "/omnisharp/OmniSharp"
     lspconfig.omnisharp.setup {
         capabilities = capabilities,
-        cmd = { omnisharp_bin, "--languageserver" , "--hostPID", tostring(pid) }
+        cmd = { omnisharp_bin, "--languageserver", "--hostPID", tostring(pid) },
+        on_attach = on_attach
     }
 end
 
@@ -102,7 +138,8 @@ end
 if sysname == "Darwin" then
     lspconfig.powershell_es.setup {
         capabilities = capabilities,
-        bundle_path = homedir .. '/PowerShellEditorServices'
+        bundle_path = homedir .. '/PowerShellEditorServices',
+        on_attach = on_attach
     }
 end
 
@@ -113,6 +150,7 @@ table.insert(runtime_path, "lua/?/init.lua")
 
 lspconfig.sumneko_lua.setup {
     capabilities = capabilities,
+    on_attach = on_attach,
     settings = {
         Lua = {
             runtime = {
@@ -123,7 +161,7 @@ lspconfig.sumneko_lua.setup {
             },
             diagnostics = {
                 -- Get the language server to recognize the `vim` global
-                globals = {'vim'},
+                globals = { 'vim' },
             },
             workspace = {
                 -- Make the server aware of Neovim runtime files
@@ -139,8 +177,14 @@ lspconfig.sumneko_lua.setup {
 
 -- go
 -- go install golang.org/x/tools/gopls@latest
-lspconfig.gopls.setup {}
+lspconfig.gopls.setup {
+    capabilities = capabilities,
+    on_attach = on_attach
+}
 
 -- rust
 -- brew install rust-analyzer
-lspconfig.rust_analyzer.setup{}
+lspconfig.rust_analyzer.setup {
+    capabilities = capabilities,
+    on_attach = on_attach
+}
