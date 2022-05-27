@@ -1,11 +1,10 @@
 local reload = function()
     for k in pairs(package.loaded) do
-        if k:match("nvn.") then
-            print(vim.inspect(k))
+        -- Refresh nvn modules, keeps config
+        if k:match("nvn.*") and k ~= "nvn.config" then
             package.loaded[k] = nil
         end
     end
-    print('nvn.reload')
 end
 
-vim.keymap.set('n', '<leader>prn', reload)
+vim.keymap.set('n', '<leader>pp', reload)
