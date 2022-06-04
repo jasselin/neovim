@@ -7,11 +7,11 @@ packer.startup(function(use)
 
     use {
         -- 'morhetz/gruvbox', as = 'gruvbox',
-        -- 'dracula/vim', as = 'dracula',
+        'dracula/vim', as = 'dracula',
         -- 'rmehri01/onenord.nvim', branch = 'main',
-        'EdenEast/nightfox.nvim', as = 'nightfox',
+        -- 'EdenEast/nightfox.nvim', as = 'nightfox',
         config = function()
-            vim.cmd([[ colorscheme nightfox ]])
+            vim.cmd([[ colorscheme dracula ]])
         end
     }
 
@@ -119,7 +119,8 @@ packer.startup(function(use)
     use {
         '~/nvn', as = 'nvn',
         requires = {
-            'nvim-lua/plenary.nvim'
+            'nvim-lua/plenary.nvim',
+            'tami5/sqlite.lua'
         },
         config = function()
             require('user.plugins.nvn')

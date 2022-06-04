@@ -9,7 +9,7 @@ local pid = vim.fn.getpid()
 
 cmp.setup({
     experimental = {
-        ghost_text = true
+        -- ghost_text = true
     },
     snippet = {
         expand = function(args)

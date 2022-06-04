@@ -45,3 +45,5 @@ require('orgmode').setup({
 --         autocmd Syntax org setlocal foldmethod=manual
 --     augroup END
 -- ]]
+
+vim.api.nvim_exec([[ autocmd filetype org set indentexpr= ]], false)
